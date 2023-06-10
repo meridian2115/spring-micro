@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: auth-server
+  config:
+    import: "optional:configserver:${CONFIG_SERVER:http://localhost:8888}"
