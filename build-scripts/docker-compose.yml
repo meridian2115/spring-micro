@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  eureka-server:
+    image: app/eureka-server
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+  config-server:
+    image: app/config-server
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    depends_on:
+      - eureka-server
+    ports:
+      - "8888:8888"
+    environment:
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://eureka-server:8761/eureka
