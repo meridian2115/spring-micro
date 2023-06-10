@@ -1,0 +1,52 @@
+server:
+  port: 8765
+jwt:
+  token:
+    secret: 1234566B59703373367639792F423F4528482B4D6251655468576D5A71347437
+    expired: 3600000
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-server
+          uri: lb://auth-server
+          predicates:
+            - Path=/auth/**
+
+        - id: shop-service
+          uri: lb://shop-service
+          predicates:
+            - Path=/shop/**
+          filters:
+            - AuthenticationFilter
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+          filters:
+            - AuthenticationFilter
+
+        - id: admin-service
+          uri: lb://user-service
+          predicates:
+            - Path=/admin/**
+          filters:
+            - AuthenticationFilter
+            - AdminFilter
+
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+springdoc:
+  swagger-ui:
+    urls:
+      - name: auth
+        url: /v3/api-docs/auth
+      - name: shop
+        url: /v3/api-docs/shop
+      - name: user
+        url: /v3/api-docs/user
