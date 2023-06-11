@@ -1,5 +1,14 @@
 server:
   port: 8765
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+logging:
+  pattern:
+    console: "[%-5level] %d{HH:mm:ss} - %msg%n"
 jwt:
   token:
     secret: 1234566B59703373367639792F423F4528482B4D6251655468576D5A71347437
