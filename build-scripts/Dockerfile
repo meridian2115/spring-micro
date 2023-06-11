@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17
 
 ARG JAR_FILE
 ADD ${JAR_FILE} /opt/app.jar
