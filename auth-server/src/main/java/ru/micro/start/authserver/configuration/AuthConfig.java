@@ -30,7 +30,7 @@ public class AuthConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(REGISTER, LOGIN, VALIDATE).permitAll()
+                .requestMatchers(REGISTER, LOGIN, VALIDATE, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .and()
                 .build();
     }
