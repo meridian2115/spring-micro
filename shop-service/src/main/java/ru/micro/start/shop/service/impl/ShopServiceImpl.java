@@ -31,10 +31,15 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public boolean addShop(Shop shop) {
-        Optional<Shop> shopDB =  repository.findByName(shop.getName());
-        Optional<Address> addressDB = addressRepository.findByFullAddress(shop.getAddress().getFullAddress());
-        if (shopDB.isPresent() && addressDB.isPresent()) {
+        Optional<Shop> shopDB = repository.findByName(shop.getName());
+        if (shopDB.isPresent()) {
             return false;
+        }
+        Optional<Address> addressDB = addressRepository.findByFullAddress(shop.getAddress().getFullAddress());
+        if (addressDB.isPresent()) {
+            shop.setAddress(addressDB.get());
+        } else {
+            addressRepository.save(shop.getAddress());
         }
         repository.save(shop);
         return true;
