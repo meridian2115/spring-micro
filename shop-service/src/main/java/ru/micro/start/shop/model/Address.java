@@ -3,7 +3,9 @@ package ru.micro.start.shop.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
+/**
+ * Адреса магазинов.
+ * */
 
 @Data
 @Entity

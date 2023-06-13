@@ -7,7 +7,9 @@ import java.util.List;
 public interface ShopService {
     List<Shop> getAll();
 
-    boolean addShop(Shop shop);
+    boolean addShop(String token, Shop shop);
 
-    Shop getShopByName(String shopName);
+    List<Shop> getShopByName(String shopName);
+
+    Shop findShopByNameAndFullAddress(String shopName, String fullAddress);
 }

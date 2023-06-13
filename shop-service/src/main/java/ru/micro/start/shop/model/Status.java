@@ -1,5 +1,8 @@
 package ru.micro.start.shop.model;
 
+/**
+ * Статусы заданий
+ * */
 public enum Status {
     CREATED("Создан"),
     CANCELED("Отменен"),
