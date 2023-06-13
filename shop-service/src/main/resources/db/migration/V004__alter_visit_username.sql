@@ -1,0 +1,1 @@
+alter table visit alter column username drop not null;
