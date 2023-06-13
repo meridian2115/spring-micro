@@ -14,11 +14,9 @@ import java.security.Key;
 @RefreshScope
 public class JwtUtil {
 
-    private Environment env;
     private final String secret;
 
     public JwtUtil(Environment env) {
-        this.env = env;
         this.secret = env.getProperty("jwt.token.secret");
     }
 
