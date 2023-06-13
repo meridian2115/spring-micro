@@ -18,9 +18,9 @@ echo "Building JAR files"
 mvn clean package -DskipTests
 
 echo "Building Docker images"
-build_basic ./config-server/target/config-server-${APP_VERSION}.jar shop/config-server
-build_basic ./eureka-server/target/eureka-server-${APP_VERSION}.jar shop/eureka-server
-build_basic ./auth-server/target/auth-server-${APP_VERSION}.jar shop/auth-server
+build_basic ./config-service/target/config-service-${APP_VERSION}.jar shop/config-service
+build_basic ./discovery-service/target/discovery-service-${APP_VERSION}.jar shop/discovery-service
+build_basic ./auth-service/target/auth-service-${APP_VERSION}.jar shop/auth-service
 build_basic ./user-service/target/user-service-${APP_VERSION}.jar shop/user-service
 build_basic ./shop-service/target/shop-service-${APP_VERSION}.jar shop/shop-service
-build_basic ./api-gateway/target/api-gateway-${APP_VERSION}.jar shop/api-gateway
+build_basic ./gateway-service/target/gateway-service-${APP_VERSION}.jar shop/gateway-service

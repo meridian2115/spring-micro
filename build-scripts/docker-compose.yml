@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  config-server:
-    image: shop/config-server:latest
+  config-service:
+    image: shop/config-service:latest
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
       interval: 30s
@@ -9,46 +9,46 @@ services:
       retries: 5
     environment:
       SERVER_PORT: 8888
-  eureka-server:
-    image: shop/eureka-server:latest
+  discovery-service:
+    image: shop/discovery-service:latest
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
       interval: 30s
       timeout: 5s
       retries: 5
     depends_on:
-      config-server:
+      config-service:
         condition: service_healthy
     environment:
-      CONFIG_SERVER: http://config-server:8888/
-  auth-server:
-    image: shop/auth-server:latest
+      CONFIG_SERVER: http://config-service:8888/
+  auth-service:
+    image: shop/auth-service:latest
     depends_on:
-      config-server:
+      config-service:
         condition: service_healthy
-      eureka-server:
+      discovery-service:
         condition: service_healthy
       user-db:
         condition: service_started
     environment:
-      CONFIG_SERVER: http://config-server:8888/
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      CONFIG_SERVER: http://config-service:8888/
+      EUREKA_SERVER: http://discovery-service:8761/eureka/
       SPRING_DATASOURCE_URL: jdbc:postgresql://user-db/auth
       SERVER_PORT: 8080
   user-service:
     image: shop/user-service:latest
     depends_on:
-      config-server:
+      config-service:
         condition: service_healthy
-      eureka-server:
+      discovery-service:
         condition: service_healthy
-      auth-server:
+      auth-service:
         condition: service_started
       user-db:
         condition: service_started
     environment:
-      CONFIG_SERVER: http://config-server:8888/
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      CONFIG_SERVER: http://config-service:8888/
+      EUREKA_SERVER: http://discovery-service:8761/eureka/
       SPRING_DATASOURCE_URL: jdbc:postgresql://user-db/auth
   user-db:
     image: postgres
@@ -62,15 +62,15 @@ services:
   shop-service:
     image: shop/shop-service:latest
     depends_on:
-      config-server:
+      config-service:
         condition: service_healthy
-      eureka-server:
+      discovery-service:
         condition: service_healthy
       shop-db:
         condition: service_started
     environment:
-      CONFIG_SERVER: http://config-server:8888/
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      CONFIG_SERVER: http://config-service:8888/
+      EUREKA_SERVER: http://discovery-service:8761/eureka/
       SPRING_DATASOURCE_URL: jdbc:postgresql://shop-db/shop
   shop-db:
     image: postgres
@@ -82,15 +82,15 @@ services:
     ports:
       - "15433:5432"
   gateway:
-    image: shop/api-gateway
+    image: shop/gateway-service
     depends_on:
-      config-server:
+      config-service:
         condition: service_healthy
-      eureka-server:
+      discovery-service:
         condition: service_healthy
     environment:
-      CONFIG_SERVER: http://config-server:8888/
-      EUREKA_SERVER: http://eureka-server:8761/eureka/
+      CONFIG_SERVER: http://config-service:8888/
+      EUREKA_SERVER: http://discovery-service:8761/eureka/
     ports:
       - "8765:8765"
 
