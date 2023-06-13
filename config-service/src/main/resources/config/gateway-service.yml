@@ -23,6 +23,37 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
+        # SWAGGER DOC ROUTES
+        - id: doc-auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/v3/api-docs
+          filters:
+            - RewritePath=/auth/(?<path>.*), /$\{path}
+
+        - id: doc-shop-service
+          uri: lb://shop-service
+          predicates:
+            - Path=/shop/v3/api-docs
+          filters:
+            - RewritePath=/shop/(?<path>.*), /$\{path}
+
+        - id: doc-user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/v3/api-docs
+          filters:
+            - RewritePath=/user/(?<path>.*), /$\{path}
+
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+        # APPLICATION ROUTES
+
         - id: auth-service
           uri: lb://auth-service
           predicates:
@@ -49,13 +80,6 @@ spring:
           filters:
             - AuthenticationFilter
             - AdminFilter
-
-        - id: openapi
-          uri: http://localhost:${server.port}
-          predicates:
-            - Path=/v3/api-docs/**
-          filters:
-            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
 springdoc:
   swagger-ui:
     urls:
