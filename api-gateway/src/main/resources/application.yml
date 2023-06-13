@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: api-gateway
-  config:
-    import: "optional:configserver:${CONFIG_SERVER:http://localhost:8888}"
-springdoc:
-  swagger-ui:
-    use-root-path: true
