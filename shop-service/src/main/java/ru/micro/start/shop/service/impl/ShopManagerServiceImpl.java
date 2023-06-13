@@ -13,11 +13,12 @@ import ru.micro.start.shop.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.micro.start.shop.util.Messages.SHOP_ABSENT;
+
 @Service
 @Slf4j
 public class ShopManagerServiceImpl implements ShopManagerService {
 
-    private final String SHOP_ABSENT = "Магазин [%s] по адресу [%s] отсутствует в справочнике";
     @Autowired
     ShopService shopService;
 
