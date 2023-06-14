@@ -1,0 +1,49 @@
+<form
+  [formGroup]="formGroup"
+  (input)="onFormChange()"
+  (ngSubmit)="onSubmit()"
+  class="register-form"
+>
+  <div class="row">
+    <h1>Регистрация в системе</h1>
+  </div>
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Имя пользователя</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error>Введите имя пользователя</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error>Введите пароль</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Повторите пароль</mat-label>
+      <input matInput type="password" formControlName="repeatPassword" />
+      <mat-error>Пароли не совпадают</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-error *ngIf="formError">{{ formError }}</mat-error>
+  </div>
+
+  <div class="row m-1">
+    <button mat-raised-button color="primary" type="submit">Регистрация</button>
+  </div>
+  <div class="row m-1">
+    <a
+      mat-raised-button
+      color="warn"
+      [routerLink]="['/auth/login']"
+      routerLinkActive="router-link-active"
+      >Вход в систему</a
+    >
+  </div>
+</form>
