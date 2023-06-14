@@ -14,6 +14,9 @@ import { StoreRouterConnectingModule} from '@ngrx/router-store';
 import { AuthStoreModule } from "./store/auth-store/auth-store.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterStoreModule } from './store/register-store/register-store.module';
+import { MatButtonModule } from '@angular/material/button';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './store/auth-store/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,9 +34,14 @@ import { RegisterStoreModule } from './store/register-store/register-store.modul
     StoreRouterConnectingModule.forRoot(),
     AuthStoreModule,
     RegisterStoreModule,
-    NgbModule
+    NgbModule,
+    MatButtonModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

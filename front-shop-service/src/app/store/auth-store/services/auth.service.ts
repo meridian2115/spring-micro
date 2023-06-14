@@ -17,23 +17,12 @@ export class AuthService {
 
   login(body: {username: string, password: string}) {
     return this.httpClient.post<{token: string}>(
-      BACKEND_BASE_DOMAIN+'/auth/login',
+      BACKEND_BASE_DOMAIN +'/auth/login',
       body
     ).pipe(
       map(res=>({
         ...res,
         ...this.jwtHelperService.decodeToken(res.token)
-      }))
-    );
-  }
-
-  register(body: {username: string, password: string}) {
-    return this.httpClient.post<{token: string}>(
-      BACKEND_BASE_DOMAIN+'/auth/register',
-      body
-    ).pipe(
-      map(res=>({
-        ...res
       }))
     );
   }
