@@ -7,12 +7,8 @@ export interface AuthData{
   token: string;
   sub: string;
   iat: number;
-  exp: number;  //Время до истечения токена
-  /*type: string;
-  username: string;
-  email: string;
+  exp: number;
   roles: string[];
-  */
 }
 
 export interface AuthState{
@@ -23,8 +19,8 @@ export interface AuthState{
 }
 
 const initialState : AuthState = {
-  loading: false,
-  loaded: true,
+  loading: true,
+  loaded: false,
   serverError: ''
 }
 
@@ -44,8 +40,8 @@ export const authReducer = createReducer(
   on(loginFailed, (state, {serverError}) => ({
     ...state,
     authData: null!,
-    loaded: true,
-    loading: false,
+    loaded: false,
+    loading: true,
     serverError
   }))
 );

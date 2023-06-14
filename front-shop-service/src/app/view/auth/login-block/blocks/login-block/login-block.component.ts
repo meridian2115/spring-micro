@@ -18,7 +18,14 @@ export class LoginBlockComponent implements OnInit {
 
   serverError = '';
 
-  constructor(private store$: Store, private router: Router) { }
+  constructor(private store$: Store, private router: Router) {
+    this.loaded$.subscribe(res => {
+        if (res) {
+          this.router.navigate(['/']);
+        }
+      }
+    );
+  }
 
   ngOnInit(): void {
   }

@@ -1,0 +1,41 @@
+<div class="container">
+  <form [formGroup]="formGroup"
+  (input)="onFormChange()"
+  (ngSubmit)="onSubmit()"
+  class="form">
+  <h1>Сведения о пользователе</h1>
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Логин пользователя:</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error *ngIf="formGroup.hasError('required', 'username')">Логин пользователя не может быть пустым</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Имя:</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
+  </div>
+
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Фамилия:</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
+  </div>
+
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>e-mail</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="formGroup.hasError('email', 'email')">Некорректный e-mail</mat-error>
+    </mat-form-field>
+  </div>
+
+    <div class="text-center">
+      <button type="submit" mat-raised-button color="primary">Сохранить</button>
+    </div>
+  </form>
+</div>

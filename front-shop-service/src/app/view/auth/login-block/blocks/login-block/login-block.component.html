@@ -1,6 +1,6 @@
 <app-login-form-ui
   [formError]="(serverError$ | async)!"
-  *ngIf="loaded$ | async"
-  [disabled]="(loading$ | async)!"
+  *ngIf="loading$ | async"
+  [disabled]="(loaded$ | async)!"
   (login)="onLogin($event)"></app-login-form-ui>
 
