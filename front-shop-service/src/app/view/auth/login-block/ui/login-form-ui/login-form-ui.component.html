@@ -1,0 +1,51 @@
+<form
+  [formGroup]="formGroup"
+  (input)="onFormChange()"
+  (ngSubmit)="onSubmit()"
+  class="login-form"
+>
+  <div class="row">
+    <h1>Вход в систему</h1>
+  </div>
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Имя пользователя</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error *ngIf="formGroup.hasError('required', 'login')"
+        >Введите имя пользователя</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div class="row m-1">
+    <mat-form-field>
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="formGroup.hasError('required', 'password')"
+        >Введите пароль</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-error *ngIf="formError">{{ formError }}</mat-error>
+  </div>
+  <div class="row text-center m-1">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="disabled"
+      type="submit"
+    >
+      Войти
+    </button>
+  </div>
+
+  <div class="row text-center m-1">
+    <a
+      mat-raised-button
+      color="warn"
+      [routerLink]="['/auth/register']"
+      routerLinkActive="router-link-active"
+      >Регистрация</a
+    >
+  </div>
+</form>
