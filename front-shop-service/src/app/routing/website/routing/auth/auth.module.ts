@@ -8,10 +8,6 @@ import { RegisterBlockModule } from "src/app/view/auth/register-block/register-b
 
 const routes: Routes = [
   {
-    path: 'login',
-    component: LoginPageComponent
-  },
-  {
     path: 'register',
     component: RegisterPageComponent
   }

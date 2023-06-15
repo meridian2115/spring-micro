@@ -16,7 +16,10 @@ export class AuthEffects {
       password: action.password
     }).pipe(
       map(loginSuccessData => loginSuccess({authData: loginSuccessData})),
-      tap(() => this.router.navigate(['/'])),
+      tap(() => {
+        this.router.navigate(['home']);
+        window.location.reload();
+      }),
       catchError(
         error => of(loginFailed({
           serverError: error.message

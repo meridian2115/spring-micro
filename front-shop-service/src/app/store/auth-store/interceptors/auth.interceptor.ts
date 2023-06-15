@@ -17,17 +17,18 @@ export class AuthInterceptor implements HttpInterceptor {
     private store$: Store) {}
 
   intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler): Observable<HttpEvent<unknown>> {
+    request: HttpRequest<any>,
+    next: HttpHandler): Observable<HttpEvent<any>> {
       return this.store$.pipe(
         select(getAccessToken),
         first(),
-        mergeMap(token=> {
-          const authRequest = token ? request = request.clone({setHeaders: {Authorization: `Bearer ${token}`}}) : request;
+        mergeMap(token => {
+          const auth_token = localStorage.getItem('auth_token');
+          const authRequest = auth_token ? request = request.clone({setHeaders: {Authorization: `Bearer ${auth_token}`}}) : request;
           return next.handle(authRequest).pipe(
               catchError(err => {
                 if(err instanceof HttpErrorResponse){
-                  if(err.status === 401){
+                  if(err.status === 401 || err.status === 500){
                     console.log('Пользователь не авторизован');
                     return EMPTY;
                   }
