@@ -70,6 +70,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean updateUserInfo(String token, User user) {
+        User currentUser = getCurrentUserFromJwt(token);
+        if (currentUser == null) {
+            return false;
+        }
+        if (!user.getUsername().equals(currentUser.getUsername())) {
+            return false;
+        }
+        currentUser.setFirstName(user.getFirstName());
+        currentUser.setLastName(user.getLastName());
+        currentUser.setEmail(user.getEmail());
+        repository.save(currentUser);
+        return true;
+    }
+
+    @Override
     public List<User> getAll() {
         return repository.findAll();
     }

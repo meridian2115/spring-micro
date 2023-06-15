@@ -19,4 +19,6 @@ public interface UserService {
     void updateUserPassword(String username, String password);
 
     void updateUserStatus(String username, String status);
+
+    boolean updateUserInfo(String token, User user);
 }
