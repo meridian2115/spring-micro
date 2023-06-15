@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInfoService } from 'src/app/store/user-info-store/service/user-info.service';
 
 @Component({
   selector: 'app-info-block',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoBlockComponent implements OnInit {
 
-  constructor(){
+  constructor(private service: UserInfoService){
   }
 
   ngOnInit(): void {
+  }
+
+  onSave(userInfo: {username: string, firstName: string, lastName: string, email: string}) {
+    this.service.updateUserInfo(userInfo).subscribe();
   }
 }
 

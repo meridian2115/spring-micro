@@ -40,6 +40,8 @@ export class InfoFormUiComponent {
   }
 
   onSubmit() {
+    this.formGroup.get('username').enable();
     this.save.emit(this.formGroup.value);
+    this.formGroup.get('username').disable();
   }
 }

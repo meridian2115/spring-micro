@@ -16,7 +16,7 @@ export class AuthService {
     }
 
   login(body: {username: string, password: string}) {
-    return this.httpClient.post<{token: string}>(
+    const result = this.httpClient.post<{token: string}>(
       BACKEND_BASE_DOMAIN +'/auth/login',
       body
     ).pipe(
@@ -25,5 +25,7 @@ export class AuthService {
         ...this.jwtHelperService.decodeToken(res.token)
       }))
     );
+    result.subscribe(res => localStorage.setItem('auth_token', res.token));
+    return result;
   }
 }

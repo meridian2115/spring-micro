@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div class="row" *ngIf="authorized">
+        <app-login-block></app-login-block>
+      </div>
+      <div class="row" *ngIf="viewMenu">
+        <app-menu-block></app-menu-block>
+      </div>
+    </div>
+    <div class="col-9">
+      Контент
+    </div>
+  </div>
+</div>
