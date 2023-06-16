@@ -10,6 +10,8 @@ import ru.micro.start.userservice.dto.UserInfo;
 import ru.micro.start.userservice.model.User;
 import ru.micro.start.userservice.service.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -21,6 +23,16 @@ public class UserController {
     public ResponseEntity<FullUserInfo> findByJwtToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         User user = service.getCurrentUserFromJwt(token);
         return ResponseEntity.ok(new FullUserInfo(user));
+    }
+
+    @GetMapping("/managers")
+    public ResponseEntity<List<UserInfo>> getManagersInfo(@RequestParam List<String> managers){
+        List<User> users = service.getUsersByUsernames(managers);
+        return ResponseEntity.ok(users
+                .stream()
+                .map(UserInfo::new)
+                .toList()
+        );
     }
 
     @PutMapping("/info/update")

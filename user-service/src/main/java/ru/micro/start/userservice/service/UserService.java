@@ -21,4 +21,6 @@ public interface UserService {
     void updateUserStatus(String username, String status);
 
     boolean updateUserInfo(String token, User user);
+
+    List<User> getUsersByUsernames(List<String> usernames);
 }

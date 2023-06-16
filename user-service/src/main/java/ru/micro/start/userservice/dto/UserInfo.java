@@ -18,6 +18,13 @@ public class UserInfo {
     private String lastName;
     private String email;
 
+    public UserInfo(User user){
+        this.username = user.getUsername();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+    }
+
     public User toUser(){
         User user = new User();
         user.setUsername(this.username);
