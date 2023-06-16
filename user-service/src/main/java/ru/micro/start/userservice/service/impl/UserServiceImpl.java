@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUserPasswordByJwt(String token, String password) {
         User user = getCurrentUserFromJwt(token);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(password));
         user.setUpdated(new Date());
         repository.save(user);
         return true;
