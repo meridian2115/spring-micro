@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.micro.start.shop.dto.VisitTaskRequest;
 import ru.micro.start.shop.service.VisitService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/shop/visit")
 public class VisitController {
@@ -21,6 +23,15 @@ public class VisitController {
             return ResponseEntity.ok("Задача успешно добавлена");
         }
         return new ResponseEntity<>("Задача не добавлена. Нет прав или такой магазин не существует", HttpStatus.CONFLICT);
+    }
+
+    @GetMapping("/tasks")
+    public ResponseEntity<List<VisitTaskRequest>> getUserTasks(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        List<VisitTaskRequest> userTasks = service.getUserTasks(token)
+                .stream()
+                .map(VisitTaskRequest::new)
+                .toList();
+        return ResponseEntity.ok(userTasks);
     }
 
 }

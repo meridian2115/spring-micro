@@ -50,4 +50,10 @@ public class VisitServiceImpl implements VisitService {
         repository.save(visitTask);
         return true;
     }
+
+    @Override
+    public List<VisitTask> getUserTasks(String token) {
+        String currentUsername = jwtUtil.getCurrentUserFromJwt(token);
+        return repository.findByUsernameOrCreatedBy(currentUsername, currentUsername);
+    }
 }
