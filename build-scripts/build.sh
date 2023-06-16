@@ -24,3 +24,9 @@ build_basic ./auth-service/target/auth-service-${APP_VERSION}.jar shop/auth-serv
 build_basic ./user-service/target/user-service-${APP_VERSION}.jar shop/user-service
 build_basic ./shop-service/target/shop-service-${APP_VERSION}.jar shop/shop-service
 build_basic ./gateway-service/target/gateway-service-${APP_VERSION}.jar shop/gateway-service
+
+APP_NAME=front-shop-service
+cd ${APP_NAME}
+ng build
+cd ..
+docker build -f ./build-scripts/DockerfileFront --build-arg PATH=./${APP_NAME}/dist/${APP_NAME} -t shop/${APP_NAME}:latest .

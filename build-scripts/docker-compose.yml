@@ -94,3 +94,8 @@ services:
     ports:
       - "8765:8765"
 
+  front:
+    image: shop/front-shop-service
+    ports:
+      - "4200:80"
+
