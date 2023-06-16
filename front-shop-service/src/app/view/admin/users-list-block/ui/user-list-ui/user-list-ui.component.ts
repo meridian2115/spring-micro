@@ -4,7 +4,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Subject } from "rxjs";
 import { FullUserInfo } from "src/app/model/fullUserInfo";
-import { AdminHttpService } from "src/app/service/admin/admin-http.service";
+import { AdminHttpService } from "src/app/service/http/admin-http.service";
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {

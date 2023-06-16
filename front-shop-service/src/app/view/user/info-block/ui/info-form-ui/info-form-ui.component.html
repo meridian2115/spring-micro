@@ -34,6 +34,10 @@
     </mat-form-field>
   </div>
 
+  <div class="row">
+    <mat-error *ngIf="formError">{{ formError }}</mat-error>
+  </div>
+
     <div class="text-center">
       <button type="submit" mat-raised-button color="primary">Сохранить</button>
     </div>

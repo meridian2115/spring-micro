@@ -1,1 +1,4 @@
-<app-info-form-ui (save)="onSave($event)"></app-info-form-ui>
+<app-info-form-ui
+  [formError]="(serverError)"
+  (save)="onSave($event)">
+</app-info-form-ui>

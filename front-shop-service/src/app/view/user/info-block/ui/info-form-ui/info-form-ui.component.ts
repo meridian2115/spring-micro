@@ -1,37 +1,41 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserInfoService } from 'src/app/store/user-info-store/service/user-info.service';
-import { UserInfo } from '../../blocks/info-block/info-block.component';
-import { Observable } from 'rxjs';
+import { UserHttpService } from 'src/app/service/http/user-http.service';
 
 @Component({
   selector: 'app-info-form-ui',
   templateUrl: './info-form-ui.component.html',
   styleUrls: ['./info-form-ui.component.scss'],
 })
-export class InfoFormUiComponent {
+export class InfoFormUiComponent implements OnInit {
   formGroup: FormGroup | any;
 
   @Input() formError = '';
   @Output() save = new EventEmitter();
 
-  userInfo: Observable<UserInfo> = this.userInfoService.getUserInfo();
-
-  constructor(private userInfoService: UserInfoService) {}
-
-  ngOnInit(): void {
+  constructor(private userHttpService: UserHttpService) {
     this.formGroup = new FormGroup({
       username: new FormControl('', [Validators.required]),
       firstName: new FormControl(''),
       lastName: new FormControl(''),
       email: new FormControl('', Validators.email),
     });
-    this.formGroup.get('username').disable();
-    this.userInfo.subscribe((res) => {
-      this.formGroup.get('username').setValue(res['username']);
-      this.formGroup.get('firstName').setValue(res['firstName']);
-      this.formGroup.get('lastName').setValue(res['lastName']);
-      this.formGroup.get('email').setValue(res['email']);
+  }
+
+  ngOnInit(): void {
+    this.userHttpService.getUserInfo().subscribe({
+      next: (res) => {
+        this.formGroup.setValue({
+          'username': res.username,
+          'firstName': res.firstName,
+          'lastName': res.lastName,
+          'email': res.email
+        });
+        this.formGroup.get('username').disable();
+      },
+      error: (err) => {
+        this.formError = err;
+      },
     });
   }
 

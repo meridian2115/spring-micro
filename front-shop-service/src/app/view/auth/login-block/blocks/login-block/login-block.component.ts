@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { login } from 'src/app/store/auth-store/store/auth.actions';
-import * as auth from "src/app/store/auth-store/store/auth.selectors";
+import { AuthHttpService } from 'src/app/service/http/auth-http.service';
 
 @Component({
   selector: 'app-login-block',
@@ -12,25 +9,21 @@ import * as auth from "src/app/store/auth-store/store/auth.selectors";
 })
 export class LoginBlockComponent implements OnInit {
 
-  loading$: Observable<boolean> = this.store$.pipe(select(auth.getLoading));
-  loaded$: Observable<boolean> = this.store$.pipe(select(auth.getLoaded));
-  serverError$: Observable<string> = this.store$.pipe(select(auth.getServerError));
-
   serverError = '';
 
-  constructor(private store$: Store, private router: Router) {
-    this.loaded$.subscribe(res => {
-        if (res) {
-          this.router.navigate(['/']);
-        }
-      }
-    );
+  constructor(private authService: AuthHttpService, private router: Router) {
   }
 
   ngOnInit(): void {
   }
 
   onLogin(loginPayload: {username: string, password: string}) {
-    this.store$.dispatch(login(loginPayload));
+    return this.authService.login(loginPayload)
+    .subscribe(res => {
+      localStorage.setItem('auth_token', res.token);
+      window.location.reload();
+   }, error => {
+    this.serverError = error;
+   });
   }
 }

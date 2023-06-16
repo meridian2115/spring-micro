@@ -22,6 +22,8 @@ import { RouterLink } from '@angular/router';
   ],
   exports:[
     LoginBlockComponent
+  ],
+  providers: [
   ]
 })
 export class LoginBlockModule { }
