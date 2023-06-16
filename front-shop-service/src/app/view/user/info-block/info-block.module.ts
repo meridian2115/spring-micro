@@ -6,7 +6,6 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
-import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -22,6 +21,8 @@ import { MatFormFieldControl, MatFormFieldModule } from "@angular/material/form-
   ],
   exports:[
     InfoBlockComponent
+  ],
+  providers: [
   ]
 })
 export class InfoBlockModule { }

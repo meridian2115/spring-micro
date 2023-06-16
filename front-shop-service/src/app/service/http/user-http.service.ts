@@ -1,13 +1,15 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, retry, throwError } from "rxjs";
-import { UserInfo } from "src/app/view/user/info-block/blocks/info-block/info-block.component";
+import { FullUserInfo } from "src/app/model/fullUserInfo";
 import { BACKEND_BASE_DOMAIN } from "src/env";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserInfoService {
+export class UserHttpService {
+
+  url: string = BACKEND_BASE_DOMAIN + '/user';
 
   constructor(
     private httpClient: HttpClient
@@ -19,14 +21,21 @@ export class UserInfoService {
     }),
   };
 
-  getUserInfo() {
-    return this.httpClient.get<UserInfo>(BACKEND_BASE_DOMAIN + '/user/info', this.httpOptions)
+  getUserInfo()  : Observable<FullUserInfo> {
+    return this.httpClient.get<FullUserInfo>(this.url + '/info', this.httpOptions)
     .pipe(retry(1), catchError(this.handleError));
   }
 
   updateUserInfo(body: {username: string, firstName: string, lastName: string, email: string}) : Observable<boolean> {
-    return this.httpClient.put<boolean>(BACKEND_BASE_DOMAIN + '/user/info/update', body, this.httpOptions)
+    return this.httpClient.put<boolean>(this.url + '/info/update', body, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
+  }
+
+  changeUserPassword(password: {newPassword: string})  : Observable<boolean> {
+    let queryParams = new HttpParams().set('password', password.newPassword);
+    console.log(queryParams.get('password'));
+    return this.httpClient.put<boolean>(this.url + '/change-password', {}, {params: queryParams})
+    .pipe(retry(1), catchError(this.handleError));
   }
 
   handleError(error: any) {
@@ -38,9 +47,8 @@ export class UserInfoService {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    window.alert(errorMessage);
     return throwError(() => {
-      return console.log(errorMessage);
+      return errorMessage;
     });
   }
 }

@@ -7,7 +7,5 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {
-    console.log(localStorage);
   }
-  auth: boolean = localStorage.getItem('auth_token') === null ? true: false;
 }

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { register } from 'src/app/store/register-store/store/register.action';
-import * as reg from "src/app/store/register-store/store/register.selector";
+import { Router } from '@angular/router';
+import { AuthHttpService } from 'src/app/service/http/auth-http.service';
 
 
 @Component({
@@ -12,17 +10,22 @@ import * as reg from "src/app/store/register-store/store/register.selector";
 })
 export class RegisterBlockComponent implements OnInit {
 
-  serverError$: Observable<string> = this.store$.pipe(select(reg.getServerError));
-
   serverError = '';
 
-  constructor(private store$: Store) {}
+  constructor(private authService: AuthHttpService, private router: Router) {}
 
   ngOnInit(): void {
   }
 
   onRegister(registerPayload: {username: string, password: string}) {
-    this.store$.dispatch(register(registerPayload));
+    this.authService.register(registerPayload).subscribe(
+      res => {
+        this.router.navigate(['/home']);
+      },
+      err => {
+        this.serverError = err;
+      }
+    )
   }
 
 }
