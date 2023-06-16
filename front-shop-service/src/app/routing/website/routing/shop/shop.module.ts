@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { MenuBlockModule } from "../../../../view/menu/menu-block/menu-block.module";
+import { ShopListBlockModule } from "../../../../view/shop/shop-list-block/shop-list-block.module";
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        MenuBlockModule
+        MenuBlockModule,
+        ShopListBlockModule
     ]
 })
 
