@@ -8,3 +8,10 @@ export interface FullUserInfo{
   roles: string[];
 }
 
+export interface UserInfo{
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+

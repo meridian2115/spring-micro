@@ -21,10 +21,8 @@ export class ShopManagerHttpService {
     .pipe(retry(1), catchError(this.handleError));
   }
 
-  viewManagersInShop(shop: Shop) : Observable<string[]>{
-    let queryParams = new HttpParams();
-    queryParams.append('shopName', shop.name);
-    queryParams.append('shopAddress', shop.address);
+  getManagersInShop(shop: Shop) : Observable<string[]>{
+    let queryParams = new HttpParams().set('shopName', shop.getName()).set('shopAddress', shop.getAddress());
     return this.httpClient.get<string[]>(this.url +'/view', {params: queryParams})
     .pipe(retry(1), catchError(this.handleError));
   }

@@ -1,6 +1,12 @@
-export interface Shop {
-  name: string,
-  address: string
+export class Shop {
+  constructor(private name: string, private address: string){}
+
+  getName(){
+    return this.name;
+  }
+  getAddress(){
+    return this.address;
+  }
 }
 
 export interface ShopManager {

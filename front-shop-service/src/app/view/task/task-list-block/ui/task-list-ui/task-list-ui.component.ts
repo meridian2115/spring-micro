@@ -28,6 +28,8 @@ export class TaskListUiComponent {
     });
   }
 
+  clickedRows = new Set<VisitTask>();
+
   ngAfterViewInit() {
   }
 
