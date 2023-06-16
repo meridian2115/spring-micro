@@ -1,32 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ShopListBlockComponent } from './blocks/shop-list-block/shop-list-block.component';
-import { ShopListUiComponent } from './ui/shop-list-ui/shop-list-ui.component';
+import { ShopInfoBlockComponent } from './blocks/shop-info-block/shop-info-block.component';
+import { ShopInfoUiComponent } from './ui/shop-info-ui/shop-info-ui.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 
 @NgModule({
   declarations: [
-    ShopListBlockComponent,
-    ShopListUiComponent
+    ShopInfoBlockComponent,
+    ShopInfoUiComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    RouterModule
+    MatDividerModule
   ],
   exports: [
-    ShopListBlockComponent
+    ShopInfoBlockComponent
   ]
 })
-export class ShopListBlockModule { }
+export class ShopInfoBlockModule { }

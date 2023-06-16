@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Router } from '@angular/router';
 import { Shop } from 'src/app/model/shop';
 import { MyCustomPaginatorIntl } from 'src/app/service/custom/custom-pagination';
 import { ShopHttpService } from 'src/app/service/http/shop-http.service';
@@ -20,7 +21,7 @@ export class ShopListUiComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
 
-  constructor(private httpClient: ShopHttpService) {
+  constructor(private httpClient: ShopHttpService, private router: Router) {
     this.httpClient.getAll().subscribe(res => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
@@ -38,5 +39,9 @@ export class ShopListUiComponent implements AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  rowClicked(row: {name: string, address: string}){
+    this.router.navigate(['/shop/info'], { queryParams: { name: row.name, address: row.address }});
   }
 }

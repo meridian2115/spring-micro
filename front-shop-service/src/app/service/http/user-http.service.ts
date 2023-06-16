@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, retry, throwError } from "rxjs";
-import { FullUserInfo } from "src/app/model/fullUserInfo";
+import { FullUserInfo, UserInfo } from "src/app/model/fullUserInfo";
 import { BACKEND_BASE_DOMAIN } from "src/env";
 
 @Injectable({
@@ -23,6 +23,16 @@ export class UserHttpService {
 
   getUserInfo()  : Observable<FullUserInfo> {
     return this.httpClient.get<FullUserInfo>(this.url + '/info', this.httpOptions)
+    .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getManagersInfo(managers: string[])  : Observable<UserInfo[]> {
+    let queryParams = new HttpParams();
+    managers.forEach(element => {
+      queryParams = queryParams.append('managers', element);
+    });
+
+    return this.httpClient.get<UserInfo[]>(this.url + '/managers', {params: queryParams})
     .pipe(retry(1), catchError(this.handleError));
   }
 
