@@ -28,8 +28,8 @@ public class ShopManagerController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<String>> viewManagersInShop(@RequestBody ShopRequest request){
-        List<String> shopManagers = service.getShopManagers(request.getName(), request.getAddress())
+    public ResponseEntity<List<String>> viewManagersInShop(@RequestParam String shopName, @RequestParam String shopAddress){
+        List<String> shopManagers = service.getShopManagers(shopName, shopAddress)
                 .stream()
                 .map(ShopManager::getUsername)
                 .toList();
