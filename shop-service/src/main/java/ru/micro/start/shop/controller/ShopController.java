@@ -19,8 +19,9 @@ public class ShopController {
     ShopService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Shop>> getAll(){
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<List<ShopRequest>> getAll(){
+        List<ShopRequest> result = service.getAll().stream().map(ShopRequest::new).toList();
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/add")
