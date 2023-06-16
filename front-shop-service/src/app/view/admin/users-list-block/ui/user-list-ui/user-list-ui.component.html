@@ -1,7 +1,10 @@
-<mat-form-field>
-  <mat-label>Фильтр</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Поиск..." #input>
-</mat-form-field>
+<h1>Список пользователей</h1>
+<div class="row">
+  <mat-form-field>
+    <mat-label>Фильтр</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Поиск..." #input>
+  </mat-form-field>
+</div>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>

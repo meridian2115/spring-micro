@@ -11,5 +11,6 @@ export interface ShopManager {
 export interface VisitTask {
   shop: Shop,
   description: string,
-  deadline: Date
+  deadline: Date,
+  status: string
 }
